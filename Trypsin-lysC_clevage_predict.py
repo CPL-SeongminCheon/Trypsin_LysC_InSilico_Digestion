@@ -52,12 +52,12 @@ allow_miss_clevage = args.missing
 min_length = args.minimum_length
 
 if input is None or output is None:
-	os.system("python Trypsin-lysC_clevage_predict.py -h") 
+	parser.print_help() 
 	sys.exit()
 
 if input == output:
 	print("Warning: input file name is same to output file name!!  See usage!")
-	os.system("python Trypsin-lysC_clevage_predict.py -h")
+	parser.print_help()
 	sys.exit()
 
 
@@ -70,13 +70,10 @@ for recod in seq.parse(input,"fasta"):
 
 	flag = 0
 	for line in tryptic_peptide:
-		flag +=1
-		
-		if line[-1] =="K" or line[-1] =="R":
+
+		if line[-1] =="K" or line[-1] =="R":   # Tryptic sequence print only, because other peptides were not ionization
 			check = line[:-1]
-		else:
-			check = line
-		count_miss = check.count("R") + check.count("K")
-		
-		out.write(">" + seqid+"@TrypticLysC"+str(flag).zfill(4)+"MissClevage"+str(count_miss)+'\n'+line+'\n')
+			flag +=1
+			count_miss = check.count("R") + check.count("K")
+			out.write(">" + seqid+"@TrypticLysC"+str(flag).zfill(4)+"MissClevage"+str(count_miss)+'\n'+line+'\n')
 
