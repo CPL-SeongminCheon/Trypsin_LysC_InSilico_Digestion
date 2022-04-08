@@ -76,4 +76,3 @@ for recod in seq.parse(input,"fasta"):
 			flag +=1
 			count_miss = check.count("R") + check.count("K")
 			out.write(">" + seqid+"@TrypticLysC"+str(flag).zfill(4)+"MissClevage"+str(count_miss)+'\n'+line+'\n')
-
